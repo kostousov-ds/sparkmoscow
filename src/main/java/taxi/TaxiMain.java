@@ -34,10 +34,16 @@ public class TaxiMain {
 
 	final Integer bostonAll = bostonRdd.map(p -> p._2).reduce((i, j) -> i + j);
 
-	final List<Tuple2<Integer, Integer>> top3 = splitted.mapToPair(row -> new Tuple2<>(Integer.valueOf(row[0]), Integer.valueOf(row[2]))).reduceByKey(Integer::sum)
+	final JavaPairRDD<Integer, String> drivers = sc.textFile("data/drivers.txt")
+			.map(line -> line.split(", "))
+			.mapToPair(row -> new Tuple2<>(Integer.valueOf(row[0]), row[1]));
+
+	final List<Tuple2<Integer, String>> top3 = splitted.mapToPair(row -> new Tuple2<>(Integer.valueOf(row[0]), Integer.valueOf(row[2]))).reduceByKey(Integer::sum)
+			.join(drivers)
+			.map(row-> row._2.swap())
 			.mapToPair(Tuple2::swap)
 			.sortByKey(false)
-			.mapToPair(Tuple2::swap)
+//			.mapToPair(Tuple2::swap)
 			.take(3);
 
 	System.out.println(count);
