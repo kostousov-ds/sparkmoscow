@@ -1,0 +1,37 @@
+#common
+target/
+out/
+classes/
+syntax:glob
+*.swp
+git.properties
+__pycache__
+
+#IDEA Project Files
+*iml
+*iws
+.idea
+*ipr
+ishopdb
+*.log
+
+# Eclipse Project Files
+.settings/
+.gwt/
+.project
+.classpath
+
+/wildfly
+/wildfly-*
+/configuration
+/deployments
+/log
+
+random_seed
+/autopays
+/B_*
+/docs
+/tmp
+/_scr
+
+
